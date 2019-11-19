@@ -1,0 +1,2 @@
+# startdatastruct
+for self-learning
