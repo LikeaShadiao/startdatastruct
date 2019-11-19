@@ -42,4 +42,4 @@ int Find(sqlist* L,ElemType x)
 	return 0;
 }
 
-//
+//啊啊啊好紧张马上3000惹
