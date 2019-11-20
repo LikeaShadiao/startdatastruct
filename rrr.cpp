@@ -43,3 +43,28 @@ int Find(sqlist* L,ElemType x)
 }
 
 //啊啊啊好紧张马上3000惹
+//顺序表的插入，在第i个位置插入一个新节点x
+int Insert(sqlist* L,int i,ElemType x)//插入成功返回1，否则返回0
+{
+	if(L->length==MAXSIZE)
+	{
+		printf("list is full");
+		return 0;
+	}
+	else if(i<0||i>L->length)
+	{
+		printf("location unlaw");
+		return 0;
+	}
+	else
+	{
+		for(int j=L->length;j>=i;j--)
+		{
+			L->data[j]=L->data[j-1];
+		}
+		L->data[i-1]=x;
+		L->length++;
+		return 1;
+	}
+}
+
