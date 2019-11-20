@@ -68,3 +68,21 @@ int Insert(sqlist* L,int i,ElemType x)//插入成功返回1，否则返回0
 	}
 }
 
+//顺序表的删除，删除第i个结点，成功返回1，错误返回0
+int Delete(sqlist* L,int i)
+{
+	if(i<0||i>L->length)
+	{
+		printf("location error");
+		return 0;
+	}
+	else
+	{
+		for(int j=i;j<=L->length-1;j++)
+			L->data[j-1]=L->data[j];
+		L->length--;
+		return 1;
+	}
+}
+
+//顺序表的合并
