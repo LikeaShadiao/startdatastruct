@@ -94,4 +94,20 @@ LinkList* Getv(LinkList*head,ElemType x)
 	return p;
 }
 
+//插入单链表
+void Insert(LinkList*L,ElemType x,int i)
+{
+	LinkList*p,*r;
+	p=Get(L,i-1);
+	if(p==NULL)
+		printf("cannot find the node to insert");
+	else
+	{
+		r=(LinkList*)malloc(sizeof(LinkList));
+		r->data=x;
+		r->next=p->next;
+		p->next=r;
+	}
+}
+
 //
