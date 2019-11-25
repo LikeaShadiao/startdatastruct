@@ -4,9 +4,9 @@ typedef int ElemType;
 typedef struct node{
 	ElemType data;
 	struct node* next;
-}LinkList;//µ¥Á´±íµÄ´æ´¢½á¹¹ 
+}LinkList;//å•é“¾è¡¨çš„å­˜å‚¨ç»“æž„ 
 LinkList *head,*p,*r;
-LinkList*CreateLinkListH()//Í·²å·¨½¨Á¢µ¥Á´±í 
+LinkList*CreateLinkListH()//å¤´æ’æ³•å»ºç«‹å•é“¾è¡¨ 
 {
 	LinkList*head,*p;
 	head=(LinkList*)malloc(sizeof(LinkList));
@@ -21,10 +21,10 @@ LinkList*CreateLinkListH()//Í·²å·¨½¨Á¢µ¥Á´±í
 	}
 	return head;
 }
-void pure(LinkList *L)//È¥µôÁ´±íÖÐÖØ¸´ÔªËØ 
+void pure(LinkList *L)//åŽ»æŽ‰é“¾è¡¨ä¸­é‡å¤å…ƒç´  
 {
 	LinkList *p,R,*t,*n;
-	p=head;
+	p=L;
 	while(p->next!=NULL)
 	{
 		t=p;
@@ -48,16 +48,138 @@ void pure(LinkList *L)//È¥µôÁ´±íÖÐÖØ¸´ÔªËØ
 		}
 	}
 }
+LinkList* Get(LinkList*head,int i)
+{
+	int j=0;
+	LinkList*p=head;
+	while(p->next!=NULL&&j<i)
+	{
+		p=p->next;
+		j++;
+	}
+	if(j==i)
+		return p;//å› ä¸ºè¿™ä¸ªå‰é¢æ‰p->next.
+	else
+		return NULL;
+}
+void Insert(LinkList*L,ElemType x,int i)
+{
+	LinkList*p,*r;
+	p=Get(L,i-1);
+	if(p==NULL)
+		printf("cannot find the node to insert");
+	else
+	{
+		r=(LinkList*)malloc(sizeof(LinkList));
+		r->data=x;
+		r->next=p->next;
+		p->next=r;
+	}
+}
+void bing(LinkList *o,LinkList *m,LinkList *&n)
+{
+	n=(LinkList*)malloc(sizeof(LinkList));
+	LinkList *p=o->next;
+	while(p)
+	{
+		Insert(n,p->data,1);
+		p=p->next;
+	}
+	p=m->next;
+	while(p)
+	{
+		Insert(n,p->data,1);
+		p=p->next;
+	}
+}
+LinkList* Getv(LinkList*head,ElemType x)
+{
+	LinkList*p=head->next;
+	while(p!=NULL&&p->data!=x)
+		p=p->next;
+	return p;
+}
+void jiao(LinkList *o,LinkList *m,LinkList *&n)
+{
+	n=(LinkList*)malloc(sizeof(LinkList));
+	LinkList *p=o->next;
+	while(p)
+	{
+		if(Getv(m,p->data)!=NULL)
+		Insert(n,p->data,1);
+		p=p->next;
+	}
+}
+void minis(LinkList *o,LinkList *m,LinkList *&n)
+{
+	n=(LinkList*)malloc(sizeof(LinkList));
+	LinkList *p=o->next;
+	while(p)
+	{
+		if(Getv(m,p->data)==NULL)
+		Insert(n,p->data,1);
+		p=p->next;
+	}
+}
 int main()
 {
-	head=CreateLinkListH();
-	pure(head);
-	r=head->next;
+	printf("Please input two sets of number.Ensure to input the number directly.\n");
+	printf("Seperate every element in a set by ' '.\n");
+	printf("Seperate two sets by 'Enter'\n");
+	LinkList *A=CreateLinkListH();
+	LinkList *B=CreateLinkListH();
+	pure(B);
+	pure(A);
+	printf("For the definition of set,A=");
+	r=A->next;
 	while(r)
 	{
 		if(r->data!=' ')
-		printf("%d\n",r->data-48);
+		printf("%d ",r->data);
 		r=r->next;
+	}
+	printf("\n");
+	printf("For the definition of set,B=");
+	r=B->next;
+	while(r)
+	{
+		if(r->data!=' ')
+		printf("%d ",r->data);
+		r=r->next;
+	}
+	printf("\n");
+	LinkList *C,*D,*E;
+	printf("The combination of the two sets is:");
+	bing(A,B,C);
+	pure(C);
+	head=C->next;
+	while(head)
+	{
+		if(head->data!=' ')
+		printf("%d ",head->data);
+		head=head->next;
+	}
+	printf("\n");
+	printf("The intersection of the two is:");
+	jiao(A,B,D);
+	pure(D);
+	head=D->next;
+	while(head)
+	{
+		if(head->data!=' ')
+		printf("%d ",head->data);
+		head=head->next;
+	}
+	printf("\n");
+	printf("The minis of the two is:");
+	minis(A,B,E);
+	pure(E);
+	head=E->next;
+	while(head)
+	{
+		if(head->data!=' ')
+		printf("%d ",head->data-48);
+		head=head->next;
 	}
 	return 0;
 }
